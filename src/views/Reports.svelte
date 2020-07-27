@@ -63,8 +63,16 @@
 				XlsxPopulate.fromFileAsync('report.xlsx')
 				.then(workbook => {
 					let csvbook = csv.split('\n').map(row => {
-						while (row.match(/(?<=\"[^,]+)\,(?=[^,]+\")/)) {
-							row = row.replace(/(?<=\"[^,]+)\,(?=[^,]+\")/,';');
+						row = row.split('"').reduce((build = '', current) => {
+							if (build.endsWith('“')) {
+								return build + current + '”'
+							}
+							else {
+								return build + current + '“'
+							}
+						});
+						while (row.match(/(?<=“[^”]+),(?=[^“]+”)/)) {
+							row = row.replace(/(?<=“[^”]+),(?=[^“]+”)/,';');
 						}
 						return row.split(',');
 					});
