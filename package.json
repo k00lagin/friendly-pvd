@@ -1,8 +1,8 @@
 {
-  "name": "svelte-electron-forge",
-  "productName": "svelte-electron-forge",
-  "version": "1.0.0",
-  "description": "Svelte + Electron Forge",
+  "name": "friendly-pvd3",
+  "productName": "Friendly PVD3",
+  "version": "0.0.1",
+  "description": "Альтернативный фронтенд к ПВД3",
   "main": "src/index.js",
   "scripts": {
     "start": "concurrently \"npm:svelte-dev\" \"electron-forge start\"",
@@ -15,16 +15,24 @@
     "svelte-start": "sirv public"
   },
   "keywords": [],
-  "author": "jeffd23",
-  "license": "MIT",
+  "author": "Vsevolod Kulagin <k00lagin>",
+  "license": "Apache v2.0",
   "config": {
     "forge": {
-      "packagerConfig": {},
+			"electronPackagerConfig": {
+				"packageManager": "npm",
+				"icon": "path.resolve(__dirname, 'public/icon.ico')"
+			},
+      "packagerConfig": {
+				"icon": "./public/icon.ico"
+			},
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "crawler"
+						"name": "crawler",
+						"iconUrl": "https://raw.githubusercontent.com/k00lagin/friendly-pvd/master/public/icon.ico",
+						"setupIcon": "./public/icon.ico"
           }
         },
         {
