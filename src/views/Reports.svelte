@@ -5,7 +5,7 @@
 	import { user } from '../stores.js';
 	const fs = require('fs');
 	const { dialog } = require('electron').remote;
-	let start, end;
+	let start, end, recieverOrgName, recieverJobFio;
 	function handleSubmit(e) {
 		e.preventDefault();
 		let path = dialog.showSaveDialogSync({
@@ -55,7 +55,7 @@
 					let workbookRow = 9;
 					function setValue(cell, value) {
 							sheet.cell(cell).value(value || '');
-							sheet.cell(cell).style({borderStyle: 'thin', horizontalAlignment: 'center', verticalAlignment: 'center'})
+							sheet.cell(cell).style({borderStyle: 'thin', horizontalAlignment: 'center', verticalAlignment: 'center', fontSize: 9})
 					}
 					csvbook.forEach(row => {
 						if (row && row[0] === $user.orgCode) {
@@ -69,6 +69,25 @@
 							workbookRow++;
 						}
 					});
+
+					function mergeSet(start, end, value) {
+						let range = sheet.range(`${start}:${end}`);
+						range.style({borderStyle: 'thin', horizontalAlignment: 'center', verticalAlignment: 'center', fontSize: 9})
+						range.value(value || '');
+						range.merged(true);
+					}
+
+					mergeSet(`B${++workbookRow}`, `D${workbookRow}`, 'Данные отправителя:');
+					mergeSet(`E${workbookRow}`, `G${workbookRow}`, 'Данные получателя:');
+
+					sheet.cell(`A${++workbookRow}`).value('Организация');
+					mergeSet(`B${workbookRow}`, `D${workbookRow}`, $user.orgName);
+					mergeSet(`E${workbookRow}`, `G${workbookRow}`, recieverOrgName);
+
+					sheet.cell(`A${++workbookRow}`).value('Должность, ФИО, Подпись');
+					mergeSet(`B${workbookRow}`, `D${workbookRow}`, `${$user.job}, ${$user.fioshort}, /_________________/`);
+					mergeSet(`E${workbookRow}`, `G${workbookRow}`, `${recieverJobFio}, /_________________/`);
+
 					workbook.toFileAsync(path);
 				});
 			})
@@ -79,5 +98,7 @@
 <form on:submit={handleSubmit}>
 	<Input type="date" bind:value={start}></Input>
 	<Input type="date" bind:value={end}></Input>
+	<textarea name="reciever-org-name" id="reciever-org-name" class="reciever-org-name" cols="30" rows="10" bind:value={recieverOrgName}></textarea>
+	<textarea name="reciever-job-fio" id="reciever-job-fio" class="reciever-job-fio" cols="30" rows="10" bind:value={recieverJobFio}></textarea>
 	<Button type="submit" primary>Скачать</Button>
 </form>
