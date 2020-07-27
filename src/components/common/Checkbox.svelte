@@ -4,6 +4,6 @@
 </script>
 
 <label>
-	<input type="checkbox" bind:checked={checked}>
+	<input type="checkbox" bind:checked={checked} name={name}>
 	<slot></slot>
 </label>
