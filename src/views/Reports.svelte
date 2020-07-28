@@ -2,13 +2,14 @@
 	import Button from '../components/common/Button.svelte';
 	import Input from '../components/common/Input.svelte';
 	const XlsxPopulate = require('xlsx-populate');
+	const path = require('path');
 	import { user } from '../stores.js';
 	const fs = require('fs');
 	const { dialog } = require('electron').remote;
 	let start, end, recieverOrgName, recieverJobFio;
 	function handleSubmit(e) {
 		e.preventDefault();
-		let path = dialog.showSaveDialogSync({
+		let filePath = dialog.showSaveDialogSync({
 			defaultPath: 'Сопроводительный реестр.xlsx',
 			filters: [
 				{ name: 'Таблицы Excel', extensions: ['xlsx'] }
@@ -41,7 +42,7 @@
 		})
 			.then(response => response.text())
 			.then(csv => {
-				XlsxPopulate.fromFileAsync('report.xlsx')
+				XlsxPopulate.fromFileAsync(path.resolve(__dirname, './report.xlsx'))
 				.then(workbook => {
 					let csvbook = csv.split('\n').map(row => {
 						row = row.split('"').map((fragment, index) => {
@@ -88,7 +89,7 @@
 					mergeSet(`B${workbookRow}`, `D${workbookRow}`, `${$user.job}, ${$user.fioshort}, /_________________/`);
 					mergeSet(`E${workbookRow}`, `G${workbookRow}`, `${recieverJobFio}, /_________________/`);
 
-					workbook.toFileAsync(path);
+					workbook.toFileAsync(filePath);
 				});
 			})
 	}
