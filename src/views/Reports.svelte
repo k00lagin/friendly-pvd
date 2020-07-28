@@ -94,11 +94,53 @@
 	}
 </script>
 
+<style>
+	form {
+		width: 400px;
+		display: flex;
+		flex-flow: row wrap;
+	}
+	form > label:first-child {
+		margin-right: auto;
+	}
+	label {
+		display: flex;
+		flex-flow: column nowrap;
+	}
+	label > span {
+		margin-bottom: 8px;
+	}
+	textarea {
+		background-color: #272729;
+		border: 0;
+		padding: 8px 16px;
+		color: #EEE;
+		font-family: inherit;
+		font-size: inherit;
+		resize: none;
+		display: block;
+		width: 400px;
+	}
+</style>
+
 <h3>Сопроводительный реестр</h3>
 <form on:submit={handleSubmit}>
-	<Input type="date" bind:value={start}></Input>
-	<Input type="date" bind:value={end}></Input>
-	<textarea name="reciever-org-name" id="reciever-org-name" class="reciever-org-name" cols="30" rows="10" bind:value={recieverOrgName}></textarea>
-	<textarea name="reciever-job-fio" id="reciever-job-fio" class="reciever-job-fio" cols="30" rows="10" bind:value={recieverJobFio}></textarea>
-	<Button type="submit" primary>Скачать</Button>
+	<label>
+		<span>От</span>
+		<Input type="date" bind:value={start}></Input>
+	</label>
+	<label>
+		<span>До</span>
+		<Input type="date" bind:value={end}></Input>
+	</label>
+	<label>
+		<span>Наименование организации получателя</span>
+		<textarea name="reciever-org-name" id="reciever-org-name" class="reciever-org-name" cols="30" rows="10" bind:value={recieverOrgName} placeholder="Управление росреестра"></textarea>
+	</label>
+	<label>
+		<span>Должность и ФИО получателя</span>
+		<textarea name="reciever-job-fio" id="reciever-job-fio" class="reciever-job-fio" cols="30" rows="10" bind:value={recieverJobFio} placeholder="Начальник управления Иванов И.И."></textarea>
+	</label>
+
+	<Button type="submit" primary style="margin-left:auto;">Скачать</Button>
 </form>

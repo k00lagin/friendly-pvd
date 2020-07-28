@@ -1,3 +1,6 @@
+<script>
+	export let style = '';
+</script>
 <style>
 	button {
 		background-color: #272729;
@@ -10,6 +13,6 @@
 		background-color: #555558;
 	}
 </style>
-<button on:click>
+<button on:click style={style}>
 	<slot></slot>
 </button>

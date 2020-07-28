@@ -34,6 +34,8 @@
 		border: 0;
 		padding: 8px 16px;
 		color: #EEE;
+		font-family: inherit;
+		font-size: inherit;
 	}
 	input:focus {
 		background-color: #444;
