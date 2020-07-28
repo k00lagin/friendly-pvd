@@ -129,11 +129,11 @@
 <form on:submit={handleSubmit}>
 	<label>
 		<span>От</span>
-		<Input type="date" bind:value={start}></Input>
+		<Input required type="date" bind:value={start}></Input>
 	</label>
 	<label>
 		<span>До</span>
-		<Input type="date" bind:value={end}></Input>
+		<Input required type="date" bind:value={end}></Input>
 	</label>
 	<label>
 		<span>Наименование организации получателя</span>

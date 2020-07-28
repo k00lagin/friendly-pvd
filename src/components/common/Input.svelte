@@ -2,6 +2,7 @@
 	export let type = 'text';
 	export let value = '';
 	export let name = '';
+	export let required = false;
 	let element;
 	const textualTypes = new Set([
 		'text',
@@ -43,7 +44,7 @@
 </style>
 
 {#if textualTypes.has(type)}
-	<input type={type} value={value} name={name} on:input={handleInput} bind:this={element}>
+	<input type={type} value={value} name={name} on:input={handleInput} bind:this={element} required={required}>
 {:else}
-	<input type={type} value={value} name={name} on:change={handleChange} bind:this={element}>
+	<input type={type} value={value} name={name} on:change={handleChange} bind:this={element} required={required}>
 {/if}
