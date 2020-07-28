@@ -79,16 +79,17 @@
 						range.merged(true);
 					}
 
-					mergeSet(`B${++workbookRow}`, `D${workbookRow}`, 'Данные отправителя:');
+					sheet.cell(`A${++workbookRow}`).style({borderStyle: 'thin'});
+					mergeSet(`B${workbookRow}`, `D${workbookRow}`, 'Данные отправителя:');
 					mergeSet(`E${workbookRow}`, `G${workbookRow}`, 'Данные получателя:');
 
-					sheet.cell(`A${++workbookRow}`).value('Организация');
+					setValue(`A${++workbookRow}`, 'Организация');
 					mergeSet(`B${workbookRow}`, `D${workbookRow}`, $user.orgName);
-					mergeSet(`E${workbookRow}`, `G${workbookRow}`, recieverOrgName);
+					mergeSet(`E${workbookRow}`, `G${workbookRow}`, $pvd3RecieverOrgName);
 
-					sheet.cell(`A${++workbookRow}`).value('Должность, ФИО, Подпись');
+					setValue(`A${++workbookRow}`, 'Должность, ФИО, Подпись');
 					mergeSet(`B${workbookRow}`, `D${workbookRow}`, `${$user.job}, ${$user.fioshort}, /_________________/`);
-					mergeSet(`E${workbookRow}`, `G${workbookRow}`, `${recieverJobFio}, /_________________/`);
+					mergeSet(`E${workbookRow}`, `G${workbookRow}`, `${$pvd3RecieverJobFio}, /_________________/`);
 
 					workbook.toFileAsync(filePath);
 				});
