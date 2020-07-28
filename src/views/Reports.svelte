@@ -1,4 +1,5 @@
 <script>
+	import { pvd3RecieverOrgName, pvd3RecieverJobFio } from '../stores.js';
 	import Button from '../components/common/Button.svelte';
 	import Input from '../components/common/Input.svelte';
 	const XlsxPopulate = require('xlsx-populate');
@@ -6,7 +7,7 @@
 	import { user } from '../stores.js';
 	const fs = require('fs');
 	const { dialog } = require('electron').remote;
-	let start, end, recieverOrgName, recieverJobFio;
+	let start, end;
 	function handleSubmit(e) {
 		e.preventDefault();
 		let filePath = dialog.showSaveDialogSync({
@@ -136,11 +137,11 @@
 	</label>
 	<label>
 		<span>Наименование организации получателя</span>
-		<textarea name="reciever-org-name" id="reciever-org-name" class="reciever-org-name" cols="30" rows="10" bind:value={recieverOrgName} placeholder="Управление росреестра"></textarea>
+		<textarea name="reciever-org-name" id="reciever-org-name" class="reciever-org-name" cols="30" rows="10" bind:value={$pvd3RecieverOrgName} placeholder="Управление росреестра"></textarea>
 	</label>
 	<label>
 		<span>Должность и ФИО получателя</span>
-		<textarea name="reciever-job-fio" id="reciever-job-fio" class="reciever-job-fio" cols="30" rows="10" bind:value={recieverJobFio} placeholder="Начальник управления Иванов И.И."></textarea>
+		<textarea name="reciever-job-fio" id="reciever-job-fio" class="reciever-job-fio" cols="30" rows="10" bind:value={$pvd3RecieverJobFio} placeholder="Начальник управления, Иванов И.И."></textarea>
 	</label>
 
 	<Button type="submit" primary style="margin-left:auto;">Скачать</Button>

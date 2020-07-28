@@ -25,4 +25,7 @@ export function persistent(key, initialValue) {
 export let serverUrl = persistent('pvd3_server_ip', '10.74.159.129');
 export let pvd3UserLogin = persistent('pvd3_user_login', '');
 export let pvd3UserPassword = persistent('pvd3_user_password', '');
+export let pvd3RecieverOrgName = persistent('pvd3_reciever_orgname', '');
+export let pvd3RecieverJobFio = persistent('pvd3_reciever_jobfio', '');
+
 export const user = writable({});
