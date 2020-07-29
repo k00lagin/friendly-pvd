@@ -1,5 +1,5 @@
 <script>
-	import { pvd3RecieverOrgName, pvd3RecieverJobFio } from '../stores.js';
+	import { pvd3RecieverOrgName, pvd3RecieverJobFio, serverUrl } from '../stores.js';
 	import Button from '../components/common/Button.svelte';
 	import Input from '../components/common/Input.svelte';
 	const XlsxPopulate = require('xlsx-populate');
@@ -16,7 +16,7 @@
 				{ name: 'Таблицы Excel', extensions: ['xlsx'] }
 			]
 		});
-		let url = 'http://10.74.159.129/api/rs/reports/execute';
+		let url = `http://${$serverUrl}/api/rs/reports/execute`;
 		fetch(url, {
 			method: 'POST',
 			headers: {
