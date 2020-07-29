@@ -61,6 +61,7 @@
 					}
 					csvbook.forEach(row => {
 						if (row && row[0] === $user.orgCode) {
+							sheet.row(workbookRow).height(50);
 							setValue(`A${workbookRow}`, row[3]);
 							setValue(`B${workbookRow}`, row[4]);
 							setValue(`C${workbookRow}`, row[6]);
