@@ -22,7 +22,7 @@
 		padding: 0;
 		display: flex;
 		flex-flow: row nowrap;
-		background-color: #171719;
+		background-color: var(--background-dark);
 		color: #d0d7db;
 	}
 	main.unauthorised {

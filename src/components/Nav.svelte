@@ -6,7 +6,7 @@
 <style>
 	nav {
 		color: rgba(255,255,255,.65);
-		background: #272729;
+		background-color: var(--background);
 		box-shadow: 0 2px 5px -2px rgba(0,0,0,0.5);
 	}
 	ul {
@@ -29,7 +29,7 @@
 	}
 	li.active {
 		color: #fff;
-		background-color: #161618;
+		background-color: var(--background-light);
 	}
 </style>
 

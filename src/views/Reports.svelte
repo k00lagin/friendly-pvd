@@ -115,7 +115,7 @@
 		margin-bottom: 8px;
 	}
 	textarea {
-		background-color: #272729;
+		background-color: var(--background);
 		border: 0;
 		padding: 8px 16px;
 		color: #EEE;
@@ -124,6 +124,10 @@
 		resize: none;
 		display: block;
 		width: 400px;
+	}
+	textarea:focus {
+		background-color: var(--background-light);
+		outline: none;
 	}
 </style>
 

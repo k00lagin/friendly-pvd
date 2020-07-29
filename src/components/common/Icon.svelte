@@ -21,5 +21,5 @@
 </style>
 
 <svg style="width:{size};height:{size}" viewBox="0 0 24 24" class:loading={type === 'loading'}>
-		<path fill={fill} d={paths[type]} />
+	<path fill={fill} d={paths[type]}/>
 </svg>
