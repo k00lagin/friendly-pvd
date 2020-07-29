@@ -7,7 +7,7 @@
 	import { user } from '../stores.js';
 	const fs = require('fs');
 	const { dialog } = require('electron').remote;
-	let start, end;
+	let start = new Date().toISOString().split('T')[0], end = new Date().toISOString().split('T')[0];
 	function handleSubmit(e) {
 		e.preventDefault();
 		let filePath = dialog.showSaveDialogSync({
