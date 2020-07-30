@@ -1,6 +1,6 @@
 <script>
 	import Icon from './common/Icon.svelte'
-	import { user } from "../stores.js";
+	import { user, route } from "../stores.js";
 </script>
 
 <style>
@@ -35,12 +35,12 @@
 
 <nav>
 	<ul>
-		<li>ПК ПВД3 {$user.fioshort}</li>
+		<li on:click={()=>$route='my-profile'}>ПК ПВД3 {$user.fioshort}</li>
 		<li class="active">
 			<Icon type="file-table-outline" size="18px"></Icon>
-			<span>Отчёты</span>
-
+			<span on:click={()=>$route='reports'}>Отчёты</span>
 		</li>
 		<!-- <li>Администрирование пользователей</li> -->
+		<!-- chrome://dino -->
 	</ul>
 </nav>

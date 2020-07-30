@@ -1,8 +1,9 @@
 <script>
 	import Login from './views/Login.svelte';
 	import Reports from './views/Reports.svelte';
+	import MyProfile from './views/MyProfile.svelte';
 	import Nav from './components/Nav.svelte';
-	import { user } from './stores.js';
+	import { user, route } from './stores.js';
 </script>
 
 {#if $user.id}
@@ -10,10 +11,15 @@
 {/if}
 
 <main class:unauthorised={!$user.id}>
-	{#if $user.id}
-		<Reports></Reports>
-	{:else}
+	{#if !$user.id}
 		<Login></Login>
+
+	{:else}
+		{#if $route === 'reports'}
+			<Reports></Reports>
+		{:else if $route === 'my-profile'}
+			<MyProfile></MyProfile>
+		{/if}
 	{/if}
 </main>
 

@@ -29,3 +29,4 @@ export let pvd3RecieverOrgName = persistent('pvd3_reciever_orgname', '');
 export let pvd3RecieverJobFio = persistent('pvd3_reciever_jobfio', '');
 
 export const user = writable({});
+export let route = writable('reports');
