@@ -20,6 +20,8 @@ export default {
 		alias({
 			entries: [
 				{ find: /^@src(.*)/, replacement: `${'./src'}$1` },
+				{ find: /^@components(.*)/, replacement: `${'./src/components'}$1` },
+				{ find: /^@common(.*)/, replacement: `${'./src/components/common'}$1` },
 			]
 		}),
 		builtins(),
