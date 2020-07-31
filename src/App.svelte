@@ -2,6 +2,8 @@
 	import Login from './views/Login.svelte';
 	import Reports from './views/Reports.svelte';
 	import MyProfile from './views/MyProfile.svelte';
+	import Users from './views/users/index.svelte';
+	import UsersEdit from './views/users/edit.svelte';
 	import Nav from './components/Nav.svelte';
 	import { me, route } from '@src/stores.js';
 </script>
@@ -19,6 +21,12 @@
 			<Reports></Reports>
 		{:else if $route === 'my-profile'}
 			<MyProfile></MyProfile>
+		{:else if $route.startsWith('users')}
+			{#if $route === 'users'}
+				<Users></Users>
+			{:else if $route.startsWith('users/edit/')}
+				<UsersEdit></UsersEdit>
+			{/if}
 		{/if}
 	{/if}
 </main>

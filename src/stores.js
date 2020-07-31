@@ -30,3 +30,4 @@ export let pvd3RecieverJobFio = persistent('pvd3_reciever_jobfio', '');
 
 export const me = writable({});
 export let route = writable('reports');
+export const users = writable([]);

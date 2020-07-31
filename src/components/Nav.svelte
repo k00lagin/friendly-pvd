@@ -36,9 +36,12 @@
 <nav>
 	<ul>
 		<li on:click={()=>$route='my-profile'}>ПК ПВД3 {$me.fioshort}</li>
-		<li class="active">
+		<li class="active" class:active={$route=='reports'} on:click={()=>$route='reports'}>
 			<Icon type="file-table-outline" size="18px"></Icon>
-			<span on:click={()=>$route='reports'}>Отчёты</span>
+			<span>Отчёты</span>
+		</li>
+		<li class:active={$route=='users'} on:click={()=>$route='users'}>
+			<span>Пользователи</span>
 		</li>
 		<!-- <li>Администрирование пользователей</li> -->
 		<!-- chrome://dino -->
