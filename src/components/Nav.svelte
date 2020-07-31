@@ -8,6 +8,7 @@
 		color: rgba(255,255,255,.65);
 		background-color: var(--background);
 		box-shadow: 0 2px 5px -2px rgba(0,0,0,0.5);
+		flex-shrink: 0;
 	}
 	ul {
 		list-style: none;
