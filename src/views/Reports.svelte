@@ -1,10 +1,9 @@
 <script>
-	import { pvd3RecieverOrgName, pvd3RecieverJobFio, serverUrl } from '../stores.js';
+	import { pvd3RecieverOrgName, pvd3RecieverJobFio, serverUrl, me } from '@src/stores.js';
 	import Button from '../components/common/Button.svelte';
 	import Input from '../components/common/Input.svelte';
 	const XlsxPopulate = require('xlsx-populate');
 	const path = require('path');
-	import { user } from '../stores.js';
 	const fs = require('fs');
 	const { dialog } = require('electron').remote;
 	let start = new Date().toISOString().split('T')[0], end = new Date().toISOString().split('T')[0];
@@ -53,14 +52,14 @@
 					});
 					let sheet = workbook.sheet('Сопроводительный реестр');
 					sheet.cell('A2').value(csvbook[1][0]);
-					sheet.cell('B3').value($user.orgName);
+					sheet.cell('B3').value($me.orgName);
 					let workbookRow = 9;
 					function setValue(cell, value) {
 							sheet.cell(cell).value(value || '');
 							sheet.cell(cell).style({borderStyle: 'thin', horizontalAlignment: 'center', verticalAlignment: 'center', fontSize: 9})
 					}
 					csvbook.forEach(row => {
-						if (row && row[0] === $user.orgCode) {
+						if (row && row[0] === $me.orgCode) {
 							sheet.row(workbookRow).height(50);
 							setValue(`A${workbookRow}`, row[3]);
 							setValue(`B${workbookRow}`, row[4]);
@@ -85,11 +84,11 @@
 					mergeSet(`E${workbookRow}`, `G${workbookRow}`, 'Данные получателя:');
 
 					setValue(`A${++workbookRow}`, 'Организация');
-					mergeSet(`B${workbookRow}`, `D${workbookRow}`, $user.orgName);
+					mergeSet(`B${workbookRow}`, `D${workbookRow}`, $me.orgName);
 					mergeSet(`E${workbookRow}`, `G${workbookRow}`, $pvd3RecieverOrgName);
 
 					setValue(`A${++workbookRow}`, 'Должность, ФИО, Подпись');
-					mergeSet(`B${workbookRow}`, `D${workbookRow}`, `${$user.job}, ${$user.fioshort}, /_________________/`);
+					mergeSet(`B${workbookRow}`, `D${workbookRow}`, `${$me.job}, ${$me.fioshort}, /_________________/`);
 					mergeSet(`E${workbookRow}`, `G${workbookRow}`, `${$pvd3RecieverJobFio}, /_________________/`);
 
 					workbook.toFileAsync(filePath);

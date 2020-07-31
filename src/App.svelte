@@ -3,15 +3,15 @@
 	import Reports from './views/Reports.svelte';
 	import MyProfile from './views/MyProfile.svelte';
 	import Nav from './components/Nav.svelte';
-	import { user, route } from './stores.js';
+	import { me, route } from '@src/stores.js';
 </script>
 
-{#if $user.id}
+{#if $me.id}
 <Nav></Nav>
 {/if}
 
-<main class:unauthorised={!$user.id}>
-	{#if !$user.id}
+<main class:unauthorised={!$me.id}>
+	{#if !$me.id}
 		<Login></Login>
 
 	{:else}

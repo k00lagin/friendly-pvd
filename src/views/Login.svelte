@@ -1,5 +1,5 @@
 <script>
-	import { user, serverUrl, pvd3UserLogin, pvd3UserPassword } from '../stores.js';
+	import { me, serverUrl, pvd3UserLogin, pvd3UserPassword } from '@src/stores.js';
 	import Button from '../components/common/Button.svelte';
 	import Input from '../components/common/Input.svelte';
 	import Checkbox from '../components/common/Checkbox.svelte';
@@ -37,7 +37,7 @@
 			body: new FormData(document.querySelector('.pvd3-login-form'))
 		}).then(response => response.json())
 			.then(data => {
-				$user = data;
+				$me = data;
 			})
 	}
 </script>

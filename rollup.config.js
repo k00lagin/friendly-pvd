@@ -3,6 +3,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import livereload from 'rollup-plugin-livereload';
 import builtins from 'rollup-plugin-node-builtins';
+import alias from '@rollup/plugin-alias';
 import { terser } from 'rollup-plugin-terser';
 
 const production = !process.env.ROLLUP_WATCH;
@@ -16,6 +17,11 @@ export default {
 		file: 'public/build/bundle.js'
 	},
 	plugins: [
+		alias({
+			entries: [
+				{ find: /^@src(.*)/, replacement: `${'./src'}$1` },
+			]
+		}),
 		builtins(),
 		svelte({
 			// enable run-time checks when not in production
