@@ -51,6 +51,10 @@
 	label {
 		display: flex;
 		flex-flow: column nowrap;
+		margin: 8px 0;
+	}
+	label > span {
+		margin-bottom: 4px;
 	}
 </style>
 
