@@ -25,6 +25,9 @@
 		padding: 0 16px;
 		align-items: center;
 	}
+	li:hover:not(:active) {
+		background-image: linear-gradient(0, rgba(255,255,255,0.05), rgba(255,255,255,0.05));
+	}
 	li > span {
 		margin-left: 10px;
 	}
