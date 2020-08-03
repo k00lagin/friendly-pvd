@@ -1,11 +1,11 @@
 <script>
-	import { me, serverUrl, users } from '@src/stores.js';
+	import { me, serverUrl, users, route } from '@src/stores.js';
 	import Checkbox from '@common/Checkbox.svelte';
 	import Button from '@common/Button.svelte';
 	import Icon from '@common/Icon.svelte';
 	let showInactiveUsers = false;
 	async function loadUsers() {
-		$users = await fetch('http://10.74.159.129/api/rs/managermia/user?page=0&size=1000')
+		$users = await fetch(`http://${$serverUrl}/api/rs/managermia/user?page=0&size=1000`)
 		.then(response => response.json())
 		.then(json => json.content.filter(user => user.orgCode && user.orgCode === $me.orgCode));
 	}
@@ -50,24 +50,26 @@
 		</tr>
 		{#each $users as user}
 			{#if user.status === 'Актуальный' || showInactiveUsers}
-				<tr>
+				<tr data-id={user.id}>
 					<td>{user.login}</td>
 					<td>{`${user.surName} ${user.firstName} ${user.patronymic}`}</td>
 					<td>{user.job}</td>
-					<td>{user.roles}</td>
+					<td>{user.roles.split(',').join(', ')}</td>
 					<td class="tool">
-						<Button aria-label="Редактировать" style="width:24px;height:24px;padding:0;" primary>
+						<Button aria-label="Редактировать" style="width:24px;height:24px;padding:0;" primary on:click={()=> $route=`users/edit/${user.id}`}>
 							<Icon size="16" type={'account-edit-outline'}></Icon>
 						</Button>
 					</td>
 					<td class="tool">
-						<Button style="width:24px;height:24px;padding:0;" primary>
-							<Icon size="16" type={user.status === 'Актуальный' ? 'account-outline' : 'account-off-outline'}></Icon>
-						</Button>
+						{#if $me.login !== user.login}
+							<Button style="width:24px;height:24px;padding:0;" primary>
+								<Icon size="16" type={user.status === 'Актуальный' ? 'account-outline' : 'account-off-outline'}></Icon>
+							</Button>
+						{/if}
 					</td>
 				</tr>
 			{/if}
 		{/each}
 	</table>
-	<Button>Создать</Button>
+	<Button on:click={()=> $route=`users/edit/new`}>Создать</Button>
 {/await}
