@@ -44,11 +44,12 @@
 			<Icon type="file-table-outline" size="18px"></Icon>
 			<span>Отчёты</span>
 		</li>
-		<li class:active={$route=='users'} on:click={()=>$route='users'}>
-			<Icon type="account-group-outline" size="18px"></Icon>
-			<span>Пользователи</span>
-		</li>
-		<!-- <li>Администрирование пользователей</li> -->
+		{#if $me.job.toLowerCase().indexOf('программист') >= 0}
+			<li class:active={$route=='users'} on:click={()=>$route='users'}>
+				<Icon type="account-group-outline" size="18px"></Icon>
+				<span>Пользователи</span>
+			</li>
+		{/if}
 		<!-- chrome://dino -->
 	</ul>
 </nav>
