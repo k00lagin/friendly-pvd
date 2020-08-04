@@ -1,8 +1,9 @@
 <script>
 	import { me, serverUrl, pvd3UserLogin, pvd3UserPassword } from '@src/stores.js';
-	import Button from '../components/common/Button.svelte';
-	import Input from '../components/common/Input.svelte';
-	import Checkbox from '../components/common/Checkbox.svelte';
+	import Button from '@common/Button.svelte';
+	import Input from '@common/Input.svelte';
+	import Password from '@common/Password.svelte';
+	import Checkbox from '@common/Checkbox.svelte';
 	let form, rememberMe = false, login = $pvd3UserLogin, password = $pvd3UserPassword;
 
 	// let guessServer = false;
@@ -61,18 +62,18 @@
 <form class="pvd3-login-form" on:submit={handleSubmit} bind:this={form}>
 	Вход в ПВД3:
 	<label>
-		Логин
+		<span>Логин</span>
 		<Input type="text" name="username" bind:value={login}></Input>
 	</label>
 	<label>
-		Пароль
-		<Input type="password" name="password" bind:value={password}></Input>
+		<span>Пароль</span>
+		<Password name="password" bind:value={password}></Password>
 	</label>
 	<Checkbox bind:checked={rememberMe}>Запомнить меня</Checkbox>
 	<!-- <Checkbox bind:checked={guessServer}>Автоматически определить сервер</Checkbox> -->
 	<!-- {#if !guessServer} -->
 	<label>
-		IP адрес сервера
+		<span>IP адрес сервера</span>
 		<Input name="server" bind:value={$serverUrl}></Input>
 	</label>
 	<!-- {/if} -->

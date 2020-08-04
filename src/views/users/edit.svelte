@@ -1,6 +1,7 @@
 <script>
 	import { me, serverUrl, users, route } from '@src/stores.js';
 	import Input from '@common/Input.svelte';
+	import Password from '@common/Password.svelte';
 	import Checkbox from '@common/Checkbox.svelte';
 	import Button from '@common/Button.svelte';
 	let userId = $route.split('/')[2];
@@ -149,7 +150,7 @@
 	{#if userId == 'new'}
 		<label>
 			Пароль
-			<Input bind:value={user.password} type="password"></Input>
+			<Password bind:value={user.password}></Password>
 		</label>
 	{/if}
 
