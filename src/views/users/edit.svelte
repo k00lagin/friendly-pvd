@@ -91,6 +91,9 @@
 </script>
 
 <style>
+	form {
+		width: 400px;
+	}
 	label {
 		display: flex;
 		flex-flow: column nowrap;
@@ -100,59 +103,60 @@
 {#await user}
 	загрузка
 {:then}
-	<label>
-		Логин
-		{#if userId === 'new'}
-			<Input bind:value={user.login}></Input>
-		{:else}
-			<Input disabled value={user.login}></Input>
-		{/if}
-	</label>
-	<label>
-		Фамилия
-		<Input bind:value={user.surName}></Input>
-	</label>
-	<label>
-		Имя
-		<Input bind:value={user.firstName}></Input>
-	</label>
-	<label>
-		Отчество
-		<Input bind:value={user.patronymic}></Input>
-	</label>
-
-	<label>
-		Должность
-		<Input bind:value={user.job}></Input>
-	</label>
-
-	<label>
-		Роли
-		{#if userId !== 'new'}
-			{#if userRoles.admin}
-				<Checkbox checked={userRoles.admin} disabled>Администратор</Checkbox>
-			{/if}
-			{#if userRoles.man}
-				<Checkbox checked={userRoles.man} disabled>Руководитель офиса</Checkbox>
-			{/if}
-			{#if userRoles.disp}
-				<Checkbox checked={userRoles.disp} disabled>Диспетчер</Checkbox>
-			{/if}
-		{/if}
-		<Checkbox bind:checked={userRoles.reception}>Оператор приёма</Checkbox>
-		<Checkbox bind:checked={userRoles.delivery}>Оператор выдачи</Checkbox>
-		<Checkbox bind:checked={userRoles.scan}>Оператор сканирования</Checkbox>
-	</label>
-
-	<Input disabled value={user.orgCode}></Input>
-	<Input disabled value={user.orgName}></Input>
-
-	{#if userId == 'new'}
+	<form>
 		<label>
-			Пароль
-			<Password bind:value={user.password}></Password>
+			Логин
+			{#if userId === 'new'}
+				<Input bind:value={user.login}></Input>
+			{:else}
+				<Input disabled value={user.login}></Input>
+			{/if}
 		</label>
-	{/if}
+		<label>
+			Фамилия
+			<Input bind:value={user.surName}></Input>
+		</label>
+		<label>
+			Имя
+			<Input bind:value={user.firstName}></Input>
+		</label>
+		<label>
+			Отчество
+			<Input bind:value={user.patronymic}></Input>
+		</label>
 
-	<Button on:click={handleSubmit}>Сохранить</Button>
+		<label>
+			Должность
+			<Input bind:value={user.job}></Input>
+		</label>
+
+		<label>
+			Роли
+			{#if userId !== 'new'}
+				{#if userRoles.admin}
+					<Checkbox checked={userRoles.admin} disabled>Администратор</Checkbox>
+				{/if}
+				{#if userRoles.man}
+					<Checkbox checked={userRoles.man} disabled>Руководитель офиса</Checkbox>
+				{/if}
+				{#if userRoles.disp}
+					<Checkbox checked={userRoles.disp} disabled>Диспетчер</Checkbox>
+				{/if}
+			{/if}
+			<Checkbox bind:checked={userRoles.reception}>Оператор приёма</Checkbox>
+			<Checkbox bind:checked={userRoles.delivery}>Оператор выдачи</Checkbox>
+			<Checkbox bind:checked={userRoles.scan}>Оператор сканирования</Checkbox>
+		</label>
+
+		<p>{user.orgCode} — {user.orgName}</p>
+
+		{#if userId == 'new'}
+			<label>
+				Пароль
+				<Password bind:value={user.password}></Password>
+			</label>
+		{/if}
+
+		<Button on:click={handleSubmit}>Сохранить</Button>
+	</form>
 {/await}
