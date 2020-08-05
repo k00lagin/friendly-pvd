@@ -1,7 +1,8 @@
 <script>
 	export let style = '';
 	export let type = 'button';
-	export let primary;
+	export let primary = false;
+	export let ariaLabel = '';
 </script>
 <style>
 	button {
@@ -35,6 +36,6 @@
 		background-color: var(--primary-lighter);
 	}
 </style>
-<button on:click style={style} type={type} class:primary={primary}>
+<button on:click style={style} type={type} class:primary={primary} aria-label={ariaLabel}>
 	<slot></slot>
 </button>

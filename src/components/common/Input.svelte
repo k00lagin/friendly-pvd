@@ -3,6 +3,7 @@
 	export let value = '';
 	export let name = '';
 	export let style = '';
+	export let placeholder = '';
 	export let required = false;
 	export let disabled = false;
 	let element;
@@ -47,7 +48,7 @@
 </style>
 
 {#if textualTypes.has(type)}
-	<input style={style} type={type} value={value} name={name} on:input={handleInput} bind:this={element} required={required} disabled={disabled}>
+	<input style={style} type={type} value={value} name={name} on:input={handleInput} bind:this={element} required={required} disabled={disabled} placeholder={placeholder}>
 {:else}
-	<input style={style} type={type} value={value} name={name} on:change={handleChange} bind:this={element} required={required} disabled={disabled}>
+	<input style={style} type={type} value={value} name={name} on:change={handleChange} bind:this={element} required={required} disabled={disabled} placeholder={placeholder}>
 {/if}
