@@ -1,5 +1,5 @@
 <script>
-	import { pvd3RecieverOrgName, pvd3RecieverJobFio, serverUrl, me } from '@src/stores.js';
+	import { pvd3route, serverUrl, me } from '@src/stores.js';
 	import Button from '../components/common/Button.svelte';
 	import Input from '../components/common/Input.svelte';
 	const XlsxPopulate = require('xlsx-populate');
@@ -79,32 +79,66 @@
 						range.merged(true);
 					}
 
-					sheet.cell(`A${++workbookRow}`).style({borderStyle: 'thin'});
-					mergeSet(`B${workbookRow}`, `D${workbookRow}`, 'Данные отправителя:');
-					mergeSet(`E${workbookRow}`, `G${workbookRow}`, 'Данные получателя:');
+					$pvd3route.forEach(step => {
+						sheet.cell(`A${++workbookRow}`).style({borderStyle: 'thin'});
+						mergeSet(`B${workbookRow}`, `D${workbookRow}`, 'Данные отправителя:');
+						mergeSet(`E${workbookRow}`, `G${workbookRow}`, 'Данные получателя:');
 
-					setValue(`A${++workbookRow}`, 'Организация');
-					mergeSet(`B${workbookRow}`, `D${workbookRow}`, $me.orgName);
-					mergeSet(`E${workbookRow}`, `G${workbookRow}`, $pvd3RecieverOrgName);
+						setValue(`A${++workbookRow}`, 'Организация');
+						mergeSet(`B${workbookRow}`, `D${workbookRow}`, step.sender.orgName);
+						mergeSet(`E${workbookRow}`, `G${workbookRow}`, step.reciever.orgName);
 
-					setValue(`A${++workbookRow}`, 'Должность, ФИО, Подпись');
-					mergeSet(`B${workbookRow}`, `D${workbookRow}`, `${$me.job}, ${$me.fioshort}, /_________________/`);
-					mergeSet(`E${workbookRow}`, `G${workbookRow}`, `${$pvd3RecieverJobFio}, /_________________/`);
+						setValue(`A${++workbookRow}`, 'Должность, ФИО, Подпись');
+						mergeSet(`B${workbookRow}`, `D${workbookRow}`, `${step.sender.executive}, /_________________/`);
+						mergeSet(`E${workbookRow}`, `G${workbookRow}`, `${step.reciever.executive}, /_________________/`);
+						workbookRow++;
+					});
 
 					workbook.toFileAsync(filePath);
 				});
 			})
 	}
+	if (localStorage.pvd3_reciever_orgname && localStorage.pvd3_reciever_jobfio) {
+		$pvd3route[0].reciever.executive = localStorage.pvd3_reciever_jobfio;
+		$pvd3route[0].reciever.executive = localStorage.pvd3_reciever_orgname;
+		localStorage.removeItem('pvd3_reciever_jobfio');
+		localStorage.removeItem('pvd3_reciever_orgname');
+	}
+	if (!$pvd3route[0].sender.executive) {
+		$pvd3route[0].sender.executive = `${$me.job}, ${$me.fioshort}`;
+	}
+	if (!$pvd3route[0].sender.orgName) {
+		$pvd3route[0].sender.orgName = $me.orgName;
+	}
+
+	function addStep() {
+		$pvd3route.push({
+			sender: {
+				executive: '',
+				orgName: ''
+			},
+			reciever: {
+				executive: '',
+				orgName: ''
+			}
+		});
+		$pvd3route = $pvd3route;
+	}
+	function removeStep(e) {
+		let index = Number(e.currentTarget.parentElement.getAttribute('data-index'));
+		$pvd3route.splice(index, 1);
+		$pvd3route = $pvd3route;
+	}
 </script>
 
 <style>
 	form {
-		width: 400px;
+		width: 820px;
 		display: flex;
 		flex-flow: row wrap;
 	}
 	form > label:first-child {
-		margin-right: auto;
+		margin-right: 20px;
 	}
 	label {
 		display: flex;
@@ -128,6 +162,18 @@
 		background-color: var(--background-light);
 		outline: none;
 	}
+	h4 {
+		width: 100%;
+	}
+	section {
+		width: 100%;
+		display: flex;
+		flex-flow: row wrap;
+	}
+	.step > label {
+		width: 400px;
+		margin-right: auto;
+	}
 </style>
 
 <h3>Сопроводительный реестр</h3>
@@ -140,14 +186,32 @@
 		<span>До</span>
 		<Input required type="date" bind:value={end}></Input>
 	</label>
-	<label>
-		<span>Наименование организации получателя</span>
-		<textarea name="reciever-org-name" id="reciever-org-name" class="reciever-org-name" cols="30" rows="10" bind:value={$pvd3RecieverOrgName} placeholder="Управление росреестра"></textarea>
-	</label>
-	<label>
-		<span>Должность и ФИО получателя</span>
-		<textarea name="reciever-job-fio" id="reciever-job-fio" class="reciever-job-fio" cols="30" rows="10" bind:value={$pvd3RecieverJobFio} placeholder="Начальник управления, Иванов И.И."></textarea>
-	</label>
+
+	<section>
+		<h4>Маршрут</h4>
+		{#each $pvd3route as step, index}
+			<section class="step" data-index={index}>
+				<Button on:click={removeStep} style="position:absolute;right:0;">X</Button>
+				<label>
+					<span>Должность и ФИО отправителя</span>
+					<Input bind:value={step.sender.executive}></Input>
+				</label>
+				<label>
+					<span>Должность и ФИО получателя</span>
+					<Input bind:value={step.reciever.executive} placeholder="Начальник управления, Иванов И.И."></Input>
+				</label>
+				<label>
+					<span>Наименование организации отправителя</span>
+					<textarea rows="5" bind:value={step.sender.orgName}></textarea>
+				</label>
+				<label>
+					<span>Наименование организации получателя</span>
+					<textarea rows="5" bind:value={step.reciever.orgName} placeholder="Управление росреестра"></textarea>
+				</label>
+			</section>
+		{/each}
+		<Button on:click={addStep}>+</Button>
+	</section>
 
 	<Button type="submit" primary style="margin-left:auto;">Скачать</Button>
 </form>
