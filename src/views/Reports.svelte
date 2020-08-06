@@ -1,7 +1,8 @@
 <script>
 	import { pvd3route, serverUrl, me } from '@src/stores.js';
-	import Button from '../components/common/Button.svelte';
-	import Input from '../components/common/Input.svelte';
+	import Button from '@common/Button.svelte';
+	import Input from '@common/Input.svelte';
+	import Icon from '@common/Icon.svelte';
 	const XlsxPopulate = require('xlsx-populate');
 	const path = require('path');
 	const fs = require('fs');
@@ -141,12 +142,9 @@
 	form > label:first-child {
 		margin-right: 20px;
 	}
-	label {
+	.step-field {
 		display: flex;
 		flex-flow: column nowrap;
-	}
-	label > span {
-		margin-bottom: 8px;
 	}
 	textarea {
 		background-color: var(--background);
@@ -157,7 +155,7 @@
 		font-size: inherit;
 		resize: none;
 		display: block;
-		width: 400px;
+		width: 100%;
 	}
 	textarea:focus {
 		background-color: var(--background-light);
@@ -170,10 +168,25 @@
 		width: 100%;
 		display: flex;
 		flex-flow: row wrap;
+		justify-content: center;
 	}
-	.step > label {
-		width: 400px;
+	.step {
+		position: relative;
+		padding: 16px;
+		border-radius: 8px;
+	}
+	.step:hover {
+		background-color: rgba(255, 255, 255, 0.03);
+	}
+	.step > div {
+		width: calc(50% - 10px);
 		margin-right: auto;
+	}
+	header {
+		margin-bottom: 8px;
+	}
+	label {
+		display: inline;
 	}
 </style>
 
@@ -192,26 +205,66 @@
 		<h4>Маршрут</h4>
 		{#each $pvd3route as step, index}
 			<section class="step" data-index={index}>
-				<Button on:click={removeStep} style="position:absolute;right:0;">X</Button>
-				<label>
-					<span>Должность и ФИО отправителя</span>
-					<Input bind:value={step.sender.executive}></Input>
-				</label>
-				<label>
-					<span>Должность и ФИО получателя</span>
-					<Input bind:value={step.reciever.executive} placeholder="Начальник управления, Иванов И.И."></Input>
-				</label>
-				<label>
-					<span>Наименование организации отправителя</span>
-					<textarea rows="5" bind:value={step.sender.orgName}></textarea>
-				</label>
-				<label>
-					<span>Наименование организации получателя</span>
-					<textarea rows="5" bind:value={step.reciever.orgName} placeholder="Управление росреестра"></textarea>
-				</label>
+				<Button on:click={removeStep} style="position:absolute;right:8px;top:8px;width:24px;height:24px;padding:0;">
+					<Icon size="18px" type="close"></Icon>
+				</Button>
+				<div class="step-field">
+					<header>
+						<label for={`sender.executive.${index}`}>Должность и ФИО отправителя</label>
+						{#if index === 0 && step.sender.executive !== `${$me.job}, ${$me.fioshort}`}
+							<Button style="width:18px;height:18px;vertical-align:bottom;transform:translateX(5px)scale(1.2);padding:0;"
+								title={`${$me.job}, ${$me.fioshort}`}
+								on:click={()=>{step.sender.executive=`${$me.job}, ${$me.fioshort}`;}}>
+								<Icon size="16px" type="restore"></Icon>
+							</Button>
+						{/if}
+						{#if index > 0 && step.sender.executive !== $pvd3route[index - 1].reciever.executive}
+							<Button style="width:18px;height:18px;vertical-align:bottom;transform:translateX(5px)scale(1.2);padding:0;"
+								title={$pvd3route[index - 1].reciever.executive}
+								on:click={()=>{step.sender.executive=$pvd3route[index - 1].reciever.executive;}}>
+								<Icon size="16px" type="restore"></Icon>
+							</Button>
+						{/if}
+					</header>
+					<Input id={`sender.executive.${index}`} bind:value={step.sender.executive}></Input>
+				</div>
+				<div class="step-field">
+					<header>
+						<label for={`reciever.executive.${index}`}>Должность и ФИО получателя</label>
+					</header>
+					<Input id={`reciever.executive.${index}`} bind:value={step.reciever.executive} placeholder="Начальник управления, Иванов И.И."></Input>
+				</div>
+				<div class="step-field">
+					<header style="margin-top:16px">
+						<label for={`sender.orgName.${index}`}>Наименование организации отправителя</label>
+						{#if index === 0 && step.sender.orgName !== $me.orgName}
+							<Button style="width:18px;height:18px;vertical-align:bottom;transform:translateX(5px)scale(1.2);padding:0;"
+								title={$me.orgName}
+								on:click={()=>{step.sender.orgName=$me.orgName}}>
+								<Icon size="16px" type="restore"></Icon>
+							</Button>
+						{/if}
+						{#if index > 0 && step.sender.orgName !== $pvd3route[index - 1].reciever.orgName}
+							<Button style="width:18px;height:18px;vertical-align:bottom;transform:translateX(5px)scale(1.2);padding:0;"
+								title={$pvd3route[index - 1].reciever.orgName}
+								on:click={()=>{step.sender.orgName=$pvd3route[index - 1].reciever.orgName}}>
+								<Icon size="16px" type="restore"></Icon>
+							</Button>
+						{/if}
+					</header>
+					<textarea id={`sender.orgName.${index}`} rows="5" bind:value={step.sender.orgName}></textarea>
+				</div>
+				<div class="step-field">
+					<header style="margin-top:16px">
+						<label for={`reciever.orgName.${index}`}>Наименование организации получателя</label>
+					</header>
+					<textarea id={`reciever.orgName.${index}`} rows="5" bind:value={step.reciever.orgName} placeholder="Управление росреестра"></textarea>
+				</div>
 			</section>
 		{/each}
-		<Button on:click={addStep}>+</Button>
+		<Button on:click={addStep} style="width:32px;height:32px;border-radius:50%;">
+			<Icon size="24" type="plus"></Icon>
+		</Button>
 	</section>
 
 	<Button type="submit" primary style="margin-left:auto;">Скачать</Button>
