@@ -112,10 +112,11 @@
 	}
 
 	function addStep() {
+		let lastIndex = $pvd3route.length - 1;
 		$pvd3route.push({
 			sender: {
-				executive: '',
-				orgName: ''
+				executive: lastIndex >= 0 ? $pvd3route[lastIndex].reciever.executive : `${$me.job}, ${$me.fioshort}`,
+				orgName:  lastIndex >= 0 ? $pvd3route[lastIndex].reciever.orgName : $me.orgName
 			},
 			reciever: {
 				executive: '',
