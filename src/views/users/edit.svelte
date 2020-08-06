@@ -8,6 +8,12 @@
 	let userRoles = {};
 	console.log($route);
 	function getUser() {
+		if (userId === 'me') {
+			let user = $users.find(user => user.login === $me.login);
+			if (user) {
+				userId = user.id
+			}
+		}
 		if (userId !== 'new') {
 			let user = $users.filter(user => user.id === userId)[0];
 			let roles = user.roles;

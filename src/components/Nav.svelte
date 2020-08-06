@@ -24,6 +24,7 @@
 		margin: 4px 0;
 		padding: 0 16px;
 		align-items: center;
+		cursor: default;
 	}
 	li:hover:not(:active) {
 		background-image: linear-gradient(0, rgba(255,255,255,0.05), rgba(255,255,255,0.05));
@@ -39,7 +40,7 @@
 
 <nav>
 	<ul>
-		<li on:click={()=>$route='my-profile'}>ПК ПВД3 {$me.fioshort}</li>
+		<li on:click={()=>$route='users/edit/me'}>ПК ПВД3 {$me.fioshort}</li>
 		<li class="active" class:active={$route=='reports'} on:click={()=>$route='reports'}>
 			<Icon type="file-table-outline" size="18px"></Icon>
 			<span>Отчёты</span>
@@ -50,6 +51,5 @@
 				<span>Пользователи</span>
 			</li>
 		{/if}
-		<!-- chrome://dino -->
 	</ul>
 </nav>
