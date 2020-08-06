@@ -2,7 +2,9 @@
 	export let style = '';
 	export let type = 'button';
 	export let primary = false;
+	export let danger = false;
 	export let ariaLabel = '';
+	export let title = '';
 </script>
 <style>
 	button {
@@ -35,7 +37,17 @@
 	button.primary:active {
 		background-color: var(--primary-lighter);
 	}
+	button.danger {
+		background-color: var(--danger);
+	}
+	button.danger:hover,
+	button.danger:focus {
+		background-color: var(--danger-light);
+	}
+	button.danger:active {
+		background-color: var(--danger-lighter);
+	}
 </style>
-<button on:click style={style} type={type} class:primary={primary} aria-label={ariaLabel}>
+<button on:click style={style} type={type} class:primary={primary} class:danger={danger} aria-label={ariaLabel} title={title}>
 	<slot></slot>
 </button>
