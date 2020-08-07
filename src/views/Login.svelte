@@ -1,5 +1,5 @@
 <script>
-	import { me, serverUrl, pvd3UserLogin, pvd3UserPassword } from '@src/stores.js';
+	import { me, serverUrl, users , pvd3UserLogin, pvd3UserPassword } from '@src/stores.js';
 	import Button from '@common/Button.svelte';
 	import Input from '@common/Input.svelte';
 	import Password from '@common/Password.svelte';
@@ -37,8 +37,11 @@
 			method: 'POST',
 			body: new FormData(document.querySelector('.pvd3-login-form'))
 		}).then(response => response.json())
-			.then(data => {
+			.then(async data => {
 				$me = data;
+				$users = await fetch(`http://${$serverUrl}/api/rs/managermia/user?page=0&size=1000`)
+				.then(response => response.json())
+				.then(json => json.content.filter(user => user.orgCode && user.orgCode === $me.orgCode));
 			})
 	}
 </script>
