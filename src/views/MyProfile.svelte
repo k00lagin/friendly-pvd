@@ -1,7 +1,7 @@
 <script>
 	import { me, serverUrl } from '@src/stores.js';
-	import Button from '../components/common/Button.svelte';
-	import Input from '../components/common/Input.svelte';
+	import Button from '@common/Button.svelte';
+	import Input from '@common/Input.svelte';
 </script>
 
 <label>

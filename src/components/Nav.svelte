@@ -1,5 +1,5 @@
 <script>
-	import Icon from './common/Icon.svelte'
+	import Icon from '@common/Icon.svelte'
 	import { me, route } from '@src/stores.js';
 </script>
 

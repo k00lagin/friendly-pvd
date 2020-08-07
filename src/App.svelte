@@ -1,10 +1,10 @@
 <script>
-	import Login from './views/Login.svelte';
-	import Reports from './views/Reports.svelte';
-	import MyProfile from './views/MyProfile.svelte';
-	import Users from './views/users/index.svelte';
-	import UsersEdit from './views/users/edit.svelte';
-	import Nav from './components/Nav.svelte';
+	import Login from '@views/Login.svelte';
+	import Reports from '@views/Reports.svelte';
+	import MyProfile from '@views/MyProfile.svelte';
+	import Users from '@views/users/index.svelte';
+	import UsersEdit from '@views/users/edit.svelte';
+	import Nav from '@components/Nav.svelte';
 	import { me, route } from '@src/stores.js';
 </script>
 

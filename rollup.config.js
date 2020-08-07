@@ -22,6 +22,7 @@ export default {
 				{ find: /^@src(.*)/, replacement: `${'./src'}$1` },
 				{ find: /^@components(.*)/, replacement: `${'./src/components'}$1` },
 				{ find: /^@common(.*)/, replacement: `${'./src/components/common'}$1` },
+				{ find: /^@views(.*)/, replacement: `${'./src/views'}$1` },
 			]
 		}),
 		builtins(),
