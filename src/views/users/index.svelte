@@ -59,7 +59,7 @@
 
 {#await $users}
 	загрузка
-{:then $users}
+{:then}
 	<Checkbox bind:checked={showInactiveUsers}>Показывать архивные записи</Checkbox>
 	<table>
 		<tr class="header">
@@ -74,7 +74,7 @@
 			{#if user.status === 'Актуальный' || showInactiveUsers}
 				<tr>
 					<td class="tool">
-						<Button ariaLabel="Редактировать" style="width:24px;height:24px;padding:0;" primary on:click={()=> $route=`users/edit/${user.id}`}>
+						<Button ariaLabel="Редактировать" style="width:24px;height:24px;padding:0;" hollow on:click={()=> $route=`users/edit/${user.id}`}>
 							<Icon size="16" type={'account-edit-outline'}></Icon>
 						</Button>
 					</td>
